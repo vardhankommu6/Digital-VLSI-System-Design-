@@ -1,0 +1,70 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 22.09.2026 22:36:13
+// Design Name: 
+// Module Name: question6
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+module question6 (
+    input clk,rst,coin5,coin10,
+    output reg dispense
+);
+reg [1:0] state;
+reg [1:0] next_state;
+
+parameter S0=2'b00,
+          S5=2'b01,
+          S10=2'b10,
+          DISPENSE=2'b11;
+always @(posedge clk or posedge rst) begin
+    if (rst)
+        state <= S0;
+    else
+        state <= next_state;
+end
+always @(*) begin
+    next_state = state;
+    case (state)
+        S0: begin
+            if (coin5)
+                next_state = S5;
+            else if (coin10)
+                next_state = S10;
+        end
+        S5: begin
+            if (coin5)
+                next_state = S10;
+            else if (coin10)
+                next_state = DISPENSE;
+        end
+        S10: begin
+            if (coin5 || coin10)
+                next_state = DISPENSE;
+        end
+        DISPENSE: begin
+            next_state = S0;
+        end
+        default:next_state = S0;
+    endcase
+end
+always @(*) begin
+    if (state == DISPENSE)
+        dispense = 1'b1;
+    else
+        dispense = 1'b0;
+end
+endmodule

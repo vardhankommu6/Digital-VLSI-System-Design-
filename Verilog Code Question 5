@@ -1,0 +1,70 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 22.09.2026 22:30:33
+// Design Name: 
+// Module Name: question5
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module question5 (
+    input clk,
+    input rst_n,
+    input sensor,
+    input door_full_open,
+    input door_full_closed,
+    output reg opening,
+    output reg open,
+    output reg closing
+);
+reg [1:0] state;
+parameter IDLE    = 2'b00;
+parameter OPENING = 2'b01;
+parameter OPEN    = 2'b10;
+parameter CLOSING = 2'b11;
+always @(posedge clk or negedge rst_n) begin
+    if (!rst_n)
+        state <= IDLE;
+    else begin
+        case (state)
+            IDLE:
+                if (sensor)
+                    state <= OPENING;
+            OPENING:
+                if (door_full_open)
+                    state <= OPEN;
+            OPEN:
+                if (!sensor)
+                    state <= CLOSING;
+            CLOSING:
+                if (door_full_closed)
+                    state <= IDLE;
+            default:state <= IDLE;
+        endcase
+    end
+end
+always @(*) begin
+    opening = 1'b0;
+    open    = 1'b0;
+    closing = 1'b0;
+    case (state)
+        OPENING: opening = 1'b1;
+        OPEN:    open    = 1'b1;
+        CLOSING: closing = 1'b1;
+        IDLE:    begin end
+    endcase
+end
+endmodule

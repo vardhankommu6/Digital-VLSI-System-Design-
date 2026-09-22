@@ -1,0 +1,37 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 22.09.2026 22:11:29
+// Design Name: 
+// Module Name: question3
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module question3 (
+    input  wire clk,
+    input  wire seat_sensor,
+    input  wire seat_belt_sensor,
+    output reg  buzzer
+);
+
+always @(posedge clk) begin
+    if (seat_sensor && !seat_belt_sensor)
+        buzzer <= 1'b1;
+    else
+        buzzer <= 1'b0;
+end
+
+endmodule

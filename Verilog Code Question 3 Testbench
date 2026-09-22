@@ -1,0 +1,45 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 22.09.2026 22:12:21
+// Design Name: 
+// Module Name: question3_tb
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module question3_tb;
+reg clk,seat_sensor,seat_belt_sensor;
+wire buzzer;
+question3 uut (.clk(clk),.seat_sensor(seat_sensor),.seat_belt_sensor(seat_belt_sensor),.buzzer(buzzer));
+always #5 clk = ~clk;
+initial begin
+    clk = 0;
+    seat_sensor = 0;
+    seat_belt_sensor = 0;
+    #10;
+    seat_sensor = 1;
+    seat_belt_sensor = 0;
+    #10;
+    seat_sensor = 1;
+    seat_belt_sensor = 1;
+    #10;
+    seat_sensor = 0;
+    seat_belt_sensor = 0;
+    #10;
+
+    $finish;
+end
+endmodule

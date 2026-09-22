@@ -1,0 +1,38 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 22.09.2026 21:51:36
+// Design Name: 
+// Module Name: minor1_q2_tb
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module minor1_q2_tb;
+reg        clk;
+reg  [3:0] a,b;
+wire [3:0] a_out,b_out;
+minor1_q2 uut (
+    .clk(clk),.a(a),.b(b),.a_out(a_out),.b_out(b_out)
+);
+always #5 clk = ~clk;
+initial begin
+    clk = 0;a=0;b=0;
+    a = 4'b0011;   
+    b = 4'b0001;   
+    #10 $finish;
+end
+endmodule
+
